@@ -13,6 +13,13 @@
     <class>com.bxtm.pojo.Giaca</class>
     <class>com.bxtm.pojo.Loaixe</class>
     <class>com.bxtm.pojo.Nguoidung</class>
+    <class>com.bxtm.pojo.Chodo</class>
+    <class>com.bxtm.pojo.Baotri</class>
+    <class>com.bxtm.pojo.Baido</class>
+    <class>com.bxtm.pojo.Hoadon</class>
+    <class>com.bxtm.pojo.Loaingay</class>
+    <class>com.bxtm.pojo.Giatien</class>
+    <class>com.bxtm.pojo.Anhbai</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/baixedb?zeroDateTimeBehavior=CONVERT_TO_NULL"/>
       <property name="javax.persistence.jdbc.user" value="root"/>

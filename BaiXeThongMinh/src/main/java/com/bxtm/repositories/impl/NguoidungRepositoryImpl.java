@@ -36,6 +36,16 @@ public class NguoidungRepositoryImpl {
                     predicates.add(cb.equal(root.get("email"), email));
                 }
                 
+                String cccd = params.get("cccd");
+                if(cccd!=null&&!cccd.isEmpty()){
+                    predicates.add(cb.equal(root.get("cccd"), cccd));
+                }
+                
+                String bienSo = params.get("bienSo");
+                if(bienSo!=null&&!bienSo.isEmpty()){
+                    predicates.add(cb.equal(root.get("bienSo"), bienSo));
+                }
+                
                 String sdt = params.get("sdt");
                 if(sdt!=null&&!sdt.isEmpty()){
                     predicates.add(cb.equal(root.get("sdt"), sdt));
@@ -53,5 +63,17 @@ public class NguoidungRepositoryImpl {
             
             return query.getResultList();
         }
+    }
+    
+    public Nguoidung createOrUpdate(Nguoidung nguoiDung){
+        try(Session s = HibernateUtils.getFACTORY().openSession()){
+            if(nguoiDung.getId() == null){
+                s.persist(nguoiDung);
+            }else
+                s.merge(nguoiDung);
+            
+            s.refresh(nguoiDung);
+        }
+        return nguoiDung;
     }
 }

@@ -31,9 +31,9 @@ public class ThongbaoRepositoryImpl {
             if(params != null){
                 List<Predicate> predicates = new ArrayList<>();
                 
-                String nguoiDung_id = params.get("nguoiDung_id");
+                String nguoiDung_id = params.get("idNguoiDung");
                 if(nguoiDung_id!=null && !nguoiDung_id.isEmpty())
-                    predicates.add(cb.equal(root.get("nguoiDungid").get("id").as(String.class), nguoiDung_id));
+                    predicates.add(cb.equal(root.get("idNguoiDung").get("id").as(String.class), nguoiDung_id));
                 
                 q.where(predicates.toArray(Predicate[]::new));
             }
@@ -42,5 +42,18 @@ public class ThongbaoRepositoryImpl {
             
             return query.getResultList();
         }
+    }
+    
+    public Thongbao createOrUpdate(Thongbao thongBao) {
+        try (Session s = HibernateUtils.getFACTORY().openSession()) {
+            if (thongBao.getId() == null)
+                s.persist(thongBao);
+            else
+                s.merge(thongBao);
+            
+            s.refresh(thongBao);
+        }
+        
+        return thongBao;
     }
 }

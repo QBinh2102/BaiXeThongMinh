@@ -4,17 +4,18 @@
  */
 package com.bxtm.hibernate;
 
-import com.bxtm.pojo.Baidoxe;
+import com.bxtm.pojo.Anhbai;
+import com.bxtm.pojo.Baido;
+import com.bxtm.pojo.Baotri;
 import com.bxtm.pojo.Booking;
-import com.bxtm.pojo.Chodoxe;
+import com.bxtm.pojo.Chodo;
 import com.bxtm.pojo.Danhgia;
-import com.bxtm.pojo.Giaca;
-import com.bxtm.pojo.Loaixe;
+import com.bxtm.pojo.Giatien;
+import com.bxtm.pojo.Hoadon;
+import com.bxtm.pojo.Loaingay;
 import com.bxtm.pojo.Nguoidung;
 import com.bxtm.pojo.Soden;
-import com.bxtm.pojo.Thanhtoan;
 import com.bxtm.pojo.Thongbao;
-import com.bxtm.pojo.Xe;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
@@ -42,17 +43,18 @@ public class HibernateUtils {
         
         conf.setProperties(props);
         
-        conf.addAnnotatedClass(Baidoxe.class);
-        conf.addAnnotatedClass(Chodoxe.class);
+        conf.addAnnotatedClass(Anhbai.class);
+        conf.addAnnotatedClass(Baido.class);
+        conf.addAnnotatedClass(Baotri.class);
         conf.addAnnotatedClass(Booking.class);
+        conf.addAnnotatedClass(Chodo.class);
         conf.addAnnotatedClass(Danhgia.class);
-        conf.addAnnotatedClass(Giaca.class);
-        conf.addAnnotatedClass(Loaixe.class);
+        conf.addAnnotatedClass(Giatien.class);
+        conf.addAnnotatedClass(Hoadon.class);
+        conf.addAnnotatedClass(Loaingay.class);
         conf.addAnnotatedClass(Nguoidung.class);
         conf.addAnnotatedClass(Soden.class);
-        conf.addAnnotatedClass(Thanhtoan.class);
         conf.addAnnotatedClass(Thongbao.class);
-        conf.addAnnotatedClass(Xe.class);
         
         ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder().applySettings(conf.getProperties()).build();
         

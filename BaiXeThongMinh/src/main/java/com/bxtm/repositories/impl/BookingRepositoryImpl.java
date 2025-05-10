@@ -31,14 +31,14 @@ public class BookingRepositoryImpl {
             if(params!=null){
                 List<Predicate> predicates = new ArrayList<>();
                 
-                String nguoiDung_id = params.get("nguoiDung_id");
+                String nguoiDung_id = params.get("idNguoiDung");
                 if(nguoiDung_id!=null&&!nguoiDung_id.isEmpty()){
-                    predicates.add(cb.equal(root.get("nguoiDungid").get("id").as(String.class), nguoiDung_id));
+                    predicates.add(cb.equal(root.get("idNguoiDung").get("id").as(String.class), nguoiDung_id));
                 }
                 
-                String choDoXe_id = params.get("choDoXe_id");
+                String choDoXe_id = params.get("idChoDo");
                 if(choDoXe_id!=null&&!choDoXe_id.isEmpty()){
-                    predicates.add(cb.equal(root.get("choDoXeid").get("id").as(String.class), choDoXe_id));
+                    predicates.add(cb.equal(root.get("idChoDo").get("id").as(String.class), choDoXe_id));
                 }
                 
                 String trangThai = params.get("trangThai");
@@ -52,5 +52,18 @@ public class BookingRepositoryImpl {
             
             return query.getResultList();
         }
+    }
+    
+    public Booking createOrUpdate(Booking booking){
+        try(Session s = HibernateUtils.getFACTORY().openSession()){
+            if(booking.getId() != null){
+                s.merge(booking);
+            }else
+                s.persist(booking);
+            
+            s.refresh(booking);
+        }
+        
+        return booking;
     }
 }

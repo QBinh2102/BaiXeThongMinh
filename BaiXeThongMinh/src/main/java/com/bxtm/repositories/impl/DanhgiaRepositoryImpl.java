@@ -31,14 +31,9 @@ public class DanhgiaRepositoryImpl {
             if(params!=null){
                 List<Predicate> predicates = new ArrayList<>();
                 
-                String choDo_id = params.get("choDo_id");
-                if(choDo_id!=null&&!choDo_id.isEmpty()){
-                    predicates.add(cb.equal(root.get("choDoXeid").get("id"), choDo_id));
-                }
-                
-                String rating = params.get("rating");
-                if(rating!=null&&!rating.isEmpty()){
-                    predicates.add(cb.equal(root.get("rating"), rating));
+                String baiDo_id = params.get("idBaiDo");
+                if(baiDo_id!=null&&!baiDo_id.isEmpty()){
+                    predicates.add(cb.equal(root.get("idBaiDo").get("id"), baiDo_id));
                 }
                 
                 q.where(predicates.toArray(Predicate[]::new));
@@ -47,6 +42,32 @@ public class DanhgiaRepositoryImpl {
             Query query = s.createQuery(q);
             
             return query.getResultList();
+        }
+    }
+    
+    public Danhgia getDanhGiaById(int id){
+        try(Session s = HibernateUtils.getFACTORY().openSession()){
+            return s.get(Danhgia.class, id);
+        }
+    }
+    
+    public Danhgia createOrUpdate(Danhgia danhGia) {
+        try (Session s = HibernateUtils.getFACTORY().openSession()) {
+            if (danhGia.getId() == null)
+                s.persist(danhGia);
+            else
+                s.merge(danhGia);
+            
+            s.refresh(danhGia);
+        }
+        
+        return danhGia;
+    }
+    
+    public void deleteDanhGia(int id) {
+        try (Session s = HibernateUtils.getFACTORY().openSession()) {
+            Danhgia danhGia = this.getDanhGiaById(id);
+            s.remove(danhGia);
         }
     }
 }

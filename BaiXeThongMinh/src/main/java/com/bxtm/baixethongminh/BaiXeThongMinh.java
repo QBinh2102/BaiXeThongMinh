@@ -4,10 +4,10 @@
 
 package com.bxtm.baixethongminh;
 
-import com.bxtm.repositories.impl.BaidoxeRepositoryImpl;
-import com.bxtm.repositories.impl.BookingRepositoryImpl;
-import com.bxtm.repositories.impl.ChodoxeRepositoryImpl;
-import com.bxtm.repositories.impl.DanhgiaRepositoryImpl;
+//import com.bxtm.repositories.impl.BaidoxeRepositoryImpl;
+//import com.bxtm.repositories.impl.BookingRepositoryImpl;
+//import com.bxtm.repositories.impl.ChodoxeRepositoryImpl;
+//import com.bxtm.repositories.impl.DanhgiaRepositoryImpl;
 import java.util.HashMap;
 import java.util.Map;
 
