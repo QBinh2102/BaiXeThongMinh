@@ -59,6 +59,13 @@ public class ChodoRepositoryImpl implements ChodoRepository {
 
         return query.getResultList();
     }
+    
+    @Override
+    public Chodo getChoDoById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Chodo.class, id);
+
+    }
 
     @Override
     public Chodo createOrUpdate(Chodo choDo) {
@@ -73,4 +80,11 @@ public class ChodoRepositoryImpl implements ChodoRepository {
         return choDo;
     }
 
+    @Override
+    public void deleteChoDo(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Chodo p = this.getChoDoById(id);
+        s.remove(p);
+
+    }
 }

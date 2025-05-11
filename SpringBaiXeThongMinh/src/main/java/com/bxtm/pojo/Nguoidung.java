@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,11 +15,12 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
-import jakarta.persistence.Temporal;
-import jakarta.persistence.TemporalType;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -41,7 +43,6 @@ import java.util.Set;
     @NamedQuery(name = "Nguoidung.findByAnhXe", query = "SELECT n FROM Nguoidung n WHERE n.anhXe = :anhXe"),
     @NamedQuery(name = "Nguoidung.findByAvatar", query = "SELECT n FROM Nguoidung n WHERE n.avatar = :avatar"),
     @NamedQuery(name = "Nguoidung.findByVaiTro", query = "SELECT n FROM Nguoidung n WHERE n.vaiTro = :vaiTro"),
-    @NamedQuery(name = "Nguoidung.findByNgayTao", query = "SELECT n FROM Nguoidung n WHERE n.ngayTao = :ngayTao"),
     @NamedQuery(name = "Nguoidung.findByActive", query = "SELECT n FROM Nguoidung n WHERE n.active = :active")})
 public class Nguoidung implements Serializable {
 
@@ -51,51 +52,103 @@ public class Nguoidung implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "hoTen")
     private String hoTen;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "taiKhoan")
     private String taiKhoan;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "matKhau")
     private String matKhau;
+    // @Pattern(regexp="[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?", message="Invalid email")//if the field contains email address consider using this annotation to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "email")
     private String email;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 15)
     @Column(name = "SDT")
     private String sdt;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "cccd")
     private String cccd;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "hieuXe")
     private String hieuXe;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 20)
     @Column(name = "bienSo")
     private String bienSo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "mauXe")
     private String mauXe;
+    @Size(max = 255)
     @Column(name = "anhXe")
     private String anhXe;
+    @Size(max = 255)
     @Column(name = "avatar")
     private String avatar;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 10)
     @Column(name = "vaiTro")
-    private Boolean vaiTro;
-    @Column(name = "ngayTao")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date ngayTao;
+    private String vaiTro;
     @Column(name = "active")
     private Boolean active;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<Booking> bookingSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<Thongbao> thongbaoSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<Hoadon> hoadonSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<Soden> sodenSet;
     @OneToMany(mappedBy = "idNguoiDung")
+    @JsonIgnore
     private Set<Danhgia> danhgiaSet;
+    @Transient
+    @JsonIgnore
+    private MultipartFile file;
 
     public Nguoidung() {
     }
 
     public Nguoidung(Integer id) {
         this.id = id;
+    }
+
+    public Nguoidung(Integer id, String hoTen, String taiKhoan, String matKhau, String email, String sdt, String cccd, String hieuXe, String bienSo, String mauXe, String vaiTro) {
+        this.id = id;
+        this.hoTen = hoTen;
+        this.taiKhoan = taiKhoan;
+        this.matKhau = matKhau;
+        this.email = email;
+        this.sdt = sdt;
+        this.cccd = cccd;
+        this.hieuXe = hieuXe;
+        this.bienSo = bienSo;
+        this.mauXe = mauXe;
+        this.vaiTro = vaiTro;
     }
 
     public Integer getId() {
@@ -194,20 +247,12 @@ public class Nguoidung implements Serializable {
         this.avatar = avatar;
     }
 
-    public Boolean getVaiTro() {
+    public String getVaiTro() {
         return vaiTro;
     }
 
-    public void setVaiTro(Boolean vaiTro) {
+    public void setVaiTro(String vaiTro) {
         this.vaiTro = vaiTro;
-    }
-
-    public Date getNgayTao() {
-        return ngayTao;
-    }
-
-    public void setNgayTao(Date ngayTao) {
-        this.ngayTao = ngayTao;
     }
 
     public Boolean getActive() {
@@ -281,6 +326,20 @@ public class Nguoidung implements Serializable {
     @Override
     public String toString() {
         return "com.bxtm.pojo.Nguoidung[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

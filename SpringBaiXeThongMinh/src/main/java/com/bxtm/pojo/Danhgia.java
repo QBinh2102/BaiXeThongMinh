@@ -18,6 +18,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -40,9 +42,12 @@ public class Danhgia implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "rating")
-    private Integer rating;
+    private int rating;
     @Lob
+    @Size(max = 65535)
     @Column(name = "binhLuan")
     private String binhLuan;
     @Column(name = "thoiGianDanhGia")
@@ -62,6 +67,11 @@ public class Danhgia implements Serializable {
         this.id = id;
     }
 
+    public Danhgia(Integer id, int rating) {
+        this.id = id;
+        this.rating = rating;
+    }
+
     public Integer getId() {
         return id;
     }
@@ -70,11 +80,11 @@ public class Danhgia implements Serializable {
         this.id = id;
     }
 
-    public Integer getRating() {
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(Integer rating) {
+    public void setRating(int rating) {
         this.rating = rating;
     }
 

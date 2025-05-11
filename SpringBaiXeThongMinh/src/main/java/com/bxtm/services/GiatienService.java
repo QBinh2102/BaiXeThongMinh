@@ -5,6 +5,7 @@
 package com.bxtm.services;
 
 import com.bxtm.pojo.Giatien;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +16,5 @@ import java.util.Map;
 public interface GiatienService {
     List<Giatien> getGiaTien(Map<String,String> params);
     Giatien createOrUpdate(Giatien giaTien);
+    List<Giatien> getGiaTienByBaiDo(int idBaiDo, Date selectedTime, int loaiNgay);
 }

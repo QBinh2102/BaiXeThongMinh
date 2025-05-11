@@ -15,7 +15,10 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -35,11 +38,14 @@ public class Anhbai implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 255)
     @Column(name = "anhBai")
     private String anhBai;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
     @ManyToOne
     private Baido idBaiDo;
+    @Transient
+    private MultipartFile file;
 
     public Anhbai() {
     }
@@ -95,6 +101,20 @@ public class Anhbai implements Serializable {
     @Override
     public String toString() {
         return "com.bxtm.pojo.Anhbai[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

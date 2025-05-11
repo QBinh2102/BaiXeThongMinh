@@ -1,0 +1,49 @@
+<!doctype html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Bãi đỗ</title>
+    <th:block th:replace="base :: styles"></th:block>
+</head>
+<body>
+    <div th:replace="base :: header"></div>
+
+    <a href="#" class="btn btn-success mt-1">Thêm bãi đỗ</a>
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th></th>
+                <th>Tên</th>
+                <th>Địa chỉ</th>
+                <th>Số lượng chỗ</th>
+                <th>Giá</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="bd : ${baidos}" th:with="gts=${giaTienMap.get(bd.id)}">
+                <td>
+                    <img th:src="@{bd.anhbaiSet}" width="200"/>
+                </td>
+                <td th:text="${bd.ten}"></td>
+                <td th:text="${bd.diaChi}"></td>
+                <td th:text="${bd.soLuong}"></td>
+
+                <td>
+                    <span th:if="${#lists.isEmpty(gts)}">Chưa có giá</span>
+                    <span th:if="${!#lists.isEmpty(gts)}"
+                          th:text="${gts[0].giaTien + ' VNĐ'}">
+                    </span>
+                </td>
+
+                <td>
+                    <button class="btn btn-danger">&times;</button>
+                    <a href="#" class="btn btn-info">&Alpha;</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div th:replace="base :: footer"></div>
+</body>
+</html>

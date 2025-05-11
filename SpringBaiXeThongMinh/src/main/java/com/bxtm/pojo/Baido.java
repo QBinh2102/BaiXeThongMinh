@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -15,6 +16,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -39,26 +42,43 @@ public class Baido implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "ten")
     private String ten;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 255)
     @Column(name = "diaChi")
     private String diaChi;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "soLuong")
-    private Integer soLuong;
+    private int soLuong;
     @Lob
+    @Size(max = 65535)
     @Column(name = "tienIch")
     private String tienIch;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "trangThai")
     private String trangThai;
     @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Chodo> chodoSet;
     @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Giatien> giatienSet;
     @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Anhbai> anhbaiSet;
     @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Danhgia> danhgiaSet;
     @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Baotri> baotriSet;
 
     public Baido() {
@@ -66,6 +86,14 @@ public class Baido implements Serializable {
 
     public Baido(Integer id) {
         this.id = id;
+    }
+
+    public Baido(Integer id, String ten, String diaChi, int soLuong, String trangThai) {
+        this.id = id;
+        this.ten = ten;
+        this.diaChi = diaChi;
+        this.soLuong = soLuong;
+        this.trangThai = trangThai;
     }
 
     public Integer getId() {
@@ -92,11 +120,11 @@ public class Baido implements Serializable {
         this.diaChi = diaChi;
     }
 
-    public Integer getSoLuong() {
+    public int getSoLuong() {
         return soLuong;
     }
 
-    public void setSoLuong(Integer soLuong) {
+    public void setSoLuong(int soLuong) {
         this.soLuong = soLuong;
     }
 

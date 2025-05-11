@@ -14,5 +14,7 @@ import java.util.Map;
  */
 public interface ChodoRepository {
     List<Chodo> getChoDo(Map<String,String> params);
+    Chodo getChoDoById(int id);
     Chodo createOrUpdate(Chodo choDo);
+    void deleteChoDo(int id);
 }

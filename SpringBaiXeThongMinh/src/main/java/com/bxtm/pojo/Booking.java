@@ -18,7 +18,10 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
@@ -31,6 +34,7 @@ import java.util.Set;
 @NamedQueries({
     @NamedQuery(name = "Booking.findAll", query = "SELECT b FROM Booking b"),
     @NamedQuery(name = "Booking.findById", query = "SELECT b FROM Booking b WHERE b.id = :id"),
+    @NamedQuery(name = "Booking.findByThanhTien", query = "SELECT b FROM Booking b WHERE b.thanhTien = :thanhTien"),
     @NamedQuery(name = "Booking.findByThoiGianDat", query = "SELECT b FROM Booking b WHERE b.thoiGianDat = :thoiGianDat"),
     @NamedQuery(name = "Booking.findByThoiGianBatDau", query = "SELECT b FROM Booking b WHERE b.thoiGianBatDau = :thoiGianBatDau"),
     @NamedQuery(name = "Booking.findByThoiGianKetThuc", query = "SELECT b FROM Booking b WHERE b.thoiGianKetThuc = :thoiGianKetThuc"),
@@ -43,23 +47,34 @@ public class Booking implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "thanhTien")
+    private BigDecimal thanhTien;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianDat")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianDat;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianBatDau")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianBatDau;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianKetThuc")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianKetThuc;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "trangThai")
     private String trangThai;
     @JoinColumn(name = "idChoDo", referencedColumnName = "id")
     @ManyToOne
     private Chodo idChoDo;
-    @JoinColumn(name = "idGiaTien", referencedColumnName = "id")
-    @ManyToOne
-    private Giatien idGiaTien;
     @JoinColumn(name = "idNguoiDung", referencedColumnName = "id")
     @ManyToOne
     private Nguoidung idNguoiDung;
@@ -73,12 +88,29 @@ public class Booking implements Serializable {
         this.id = id;
     }
 
+    public Booking(Integer id, BigDecimal thanhTien, Date thoiGianDat, Date thoiGianBatDau, Date thoiGianKetThuc, String trangThai) {
+        this.id = id;
+        this.thanhTien = thanhTien;
+        this.thoiGianDat = thoiGianDat;
+        this.thoiGianBatDau = thoiGianBatDau;
+        this.thoiGianKetThuc = thoiGianKetThuc;
+        this.trangThai = trangThai;
+    }
+
     public Integer getId() {
         return id;
     }
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public BigDecimal getThanhTien() {
+        return thanhTien;
+    }
+
+    public void setThanhTien(BigDecimal thanhTien) {
+        this.thanhTien = thanhTien;
     }
 
     public Date getThoiGianDat() {
@@ -119,14 +151,6 @@ public class Booking implements Serializable {
 
     public void setIdChoDo(Chodo idChoDo) {
         this.idChoDo = idChoDo;
-    }
-
-    public Giatien getIdGiaTien() {
-        return idGiaTien;
-    }
-
-    public void setIdGiaTien(Giatien idGiaTien) {
-        this.idGiaTien = idGiaTien;
     }
 
     public Nguoidung getIdNguoiDung() {

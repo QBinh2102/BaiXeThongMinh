@@ -51,11 +51,11 @@ DROP TABLE IF EXISTS `baido`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `baido` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `ten` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `diaChi` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `soLuong` int DEFAULT NULL,
+  `ten` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `diaChi` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `soLuong` int NOT NULL,
   `tienIch` text,
-  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -80,9 +80,9 @@ DROP TABLE IF EXISTS `baotri`;
 CREATE TABLE `baotri` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idBaiDo` int DEFAULT NULL,
-  `thoiGianBatDau` datetime DEFAULT NULL,
-  `thoiGianKetThuc` datetime DEFAULT NULL,
-  `tinhTrang` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `thoiGianBatDau` datetime NOT NULL,
+  `thoiGianKetThuc` datetime NOT NULL,
+  `tinhTrang` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idBaiDo` (`idBaiDo`),
   CONSTRAINT `baotri_ibfk_1` FOREIGN KEY (`idBaiDo`) REFERENCES `baido` (`id`)
@@ -110,18 +110,16 @@ CREATE TABLE `booking` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idChoDo` int DEFAULT NULL,
   `idNguoiDung` int DEFAULT NULL,
-  `idGiaTien` int DEFAULT NULL,
-  `thoiGianDat` datetime DEFAULT NULL,
-  `thoiGianBatDau` datetime DEFAULT NULL,
-  `thoiGianKetThuc` datetime DEFAULT NULL,
-  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `thanhTien` decimal(10,2) NOT NULL,
+  `thoiGianDat` datetime NOT NULL,
+  `thoiGianBatDau` datetime NOT NULL,
+  `thoiGianKetThuc` datetime NOT NULL,
+  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idChoDo` (`idChoDo`),
   KEY `idNguoiDung` (`idNguoiDung`),
-  KEY `idGiaTien` (`idGiaTien`),
   CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`idChoDo`) REFERENCES `chodo` (`id`),
-  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`idNguoiDung`) REFERENCES `nguoidung` (`id`),
-  CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`idGiaTien`) REFERENCES `giatien` (`id`)
+  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`idNguoiDung`) REFERENCES `nguoidung` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -131,7 +129,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (1,1,1,1,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,2,2,2,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,3,1,3,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
+INSERT INTO `booking` VALUES (1,1,1,10000.00,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,2,2,20000.00,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,3,1,20000.00,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -145,8 +143,8 @@ DROP TABLE IF EXISTS `chodo`;
 CREATE TABLE `chodo` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idBaiDo` int DEFAULT NULL,
-  `viTri` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `viTri` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idBaiDo` (`idBaiDo`),
   CONSTRAINT `chodo_ibfk_1` FOREIGN KEY (`idBaiDo`) REFERENCES `baido` (`id`)
@@ -174,7 +172,7 @@ CREATE TABLE `danhgia` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idNguoiDung` int DEFAULT NULL,
   `idBaiDo` int DEFAULT NULL,
-  `rating` int DEFAULT NULL,
+  `rating` int NOT NULL,
   `binhLuan` text,
   `thoiGianDanhGia` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
@@ -207,9 +205,9 @@ CREATE TABLE `giatien` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idBaiDo` int DEFAULT NULL,
   `idLoaiNgay` int DEFAULT NULL,
-  `giaTien` decimal(10,2) DEFAULT NULL,
-  `thoiGianApDung` time DEFAULT NULL,
-  `thoiGianKetThuc` time DEFAULT NULL,
+  `giaTien` decimal(10,2) NOT NULL,
+  `thoiGianApDung` time NOT NULL,
+  `thoiGianKetThuc` time NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idBaiDo` (`idBaiDo`),
   KEY `idLoaiNgay` (`idLoaiNgay`),
@@ -239,9 +237,9 @@ CREATE TABLE `hoadon` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idNguoiDung` int DEFAULT NULL,
   `idBooking` int DEFAULT NULL,
-  `phuongThuc` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `thoiGianThanhToan` datetime DEFAULT NULL,
-  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `phuongThuc` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `thoiGianThanhToan` datetime NOT NULL,
+  `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `idNguoiDung` (`idNguoiDung`),
   KEY `idBooking` (`idBooking`),
@@ -269,7 +267,7 @@ DROP TABLE IF EXISTS `loaingay`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `loaingay` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `tenLe` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `tenLe` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `ngayApDung` date DEFAULT NULL,
   `ngayKetThuc` date DEFAULT NULL,
   PRIMARY KEY (`id`)
@@ -295,25 +293,24 @@ DROP TABLE IF EXISTS `nguoidung`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `nguoidung` (
   `id` int NOT NULL AUTO_INCREMENT,
-  `hoTen` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `taiKhoan` varchar(50) DEFAULT NULL,
-  `matKhau` varchar(255) DEFAULT NULL,
-  `email` varchar(100) DEFAULT NULL,
-  `SDT` varchar(15) DEFAULT NULL,
-  `cccd` varchar(20) DEFAULT NULL,
-  `hieuXe` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
-  `bienSo` varchar(20) DEFAULT NULL,
-  `mauXe` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci DEFAULT NULL,
+  `hoTen` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `taiKhoan` varchar(50) NOT NULL,
+  `matKhau` varchar(255) NOT NULL,
+  `email` varchar(100) NOT NULL,
+  `SDT` varchar(15) NOT NULL,
+  `cccd` varchar(20) NOT NULL,
+  `hieuXe` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
+  `bienSo` varchar(20) NOT NULL,
+  `mauXe` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `anhXe` varchar(255) DEFAULT NULL,
   `avatar` varchar(255) DEFAULT NULL,
-  `vaiTro` tinyint(1) DEFAULT '1',
-  `ngayTao` datetime DEFAULT CURRENT_TIMESTAMP,
+  `vaiTro` varchar(10) NOT NULL,
   `active` tinyint(1) DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `taiKhoan` (`taiKhoan`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `cccd` (`cccd`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -322,7 +319,7 @@ CREATE TABLE `nguoidung` (
 
 LOCK TABLES `nguoidung` WRITE;
 /*!40000 ALTER TABLE `nguoidung` DISABLE KEYS */;
-INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','123456','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,1,'2025-05-09 16:51:10',1),(2,'Trần Thị B','user2','123456','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,1,'2025-05-09 16:51:10',1),(3,'Admin C','admin','123456','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,0,'2025-05-09 16:51:10',1);
+INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','123456','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,'ROLE_USER',1),(2,'Trần Thị B','user2','123456','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,'ROLE_USER',1),(3,'Admin C','admin','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,'ROLE_ADMIN',1),(4,'Tô Quốc Bình','binh2102','$2a$10$Yzc2YC67PECix/WdHmLubOy1Ek7EFird0ZAGpnifv0Qc1Ql43fWiS','toquocbinh2102@gmail.com','0762590966','0123456789','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746962679/clsxz3q3gy3bbnbwzzag.png','ROLE_USER',1),(5,'Tô Quốc Bình','binh2004','$2a$10$pP63mcAvmdua0oFdqnjw3OQ62uA3zBpnGHflR5583QT3RlVGXJ.dq','toquocbinh@gmail.com','0762590966','0987654321','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746962942/onetaj4waqwuv70hurv9.png','ROLE_USER',1),(6,'Tô Quốc Bình','qbinh','$2a$10$VTtDTke1QKowLdrR/kOsCelilNp3QExVS3yfJP2m34OW8CxLq.SN2','toquocbinh2004@gmail.com','0762590966','0987654322','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746963011/du052nojalxhqcyjwtfv.png','ROLE_USER',1);
 /*!40000 ALTER TABLE `nguoidung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -363,7 +360,7 @@ DROP TABLE IF EXISTS `thongbao`;
 CREATE TABLE `thongbao` (
   `id` int NOT NULL AUTO_INCREMENT,
   `idNguoiDung` int DEFAULT NULL,
-  `noiDung` text,
+  `noiDung` text NOT NULL,
   `thoiGianThongBao` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `idNguoiDung` (`idNguoiDung`),
@@ -390,4 +387,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-10 11:20:28
+-- Dump completed on 2025-05-11 18:34:50

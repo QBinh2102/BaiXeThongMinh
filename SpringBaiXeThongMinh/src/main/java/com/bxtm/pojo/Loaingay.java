@@ -16,6 +16,8 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
@@ -40,6 +42,9 @@ public class Loaingay implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "tenLe")
     private String tenLe;
     @Column(name = "ngayApDung")
@@ -56,6 +61,11 @@ public class Loaingay implements Serializable {
 
     public Loaingay(Integer id) {
         this.id = id;
+    }
+
+    public Loaingay(Integer id, String tenLe) {
+        this.id = id;
+        this.tenLe = tenLe;
     }
 
     public Integer getId() {

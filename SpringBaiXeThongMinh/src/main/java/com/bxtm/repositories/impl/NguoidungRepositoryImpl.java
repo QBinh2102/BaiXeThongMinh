@@ -17,6 +17,7 @@ import java.util.Map;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,6 +31,8 @@ public class NguoidungRepositoryImpl implements NguoidungRepository {
 
     @Autowired
     private LocalSessionFactoryBean factory;
+    @Autowired
+    private BCryptPasswordEncoder password;
 
     @Override
     public List<Nguoidung> getNguoiDung(Map<String, String> params) {
@@ -74,6 +77,14 @@ public class NguoidungRepositoryImpl implements NguoidungRepository {
 
         return query.getResultList();
     }
+    
+    @Override
+    public Nguoidung getNguoiDungByTaiKhoan(String taiKhoan) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("Nguoidung.findByTaiKhoan", Nguoidung.class);
+        q.setParameter("taiKhoan", taiKhoan);
+        return (Nguoidung) q.getSingleResult();
+    }
 
     @Override
     public Nguoidung createOrUpdate(Nguoidung nguoiDung) {
@@ -86,5 +97,11 @@ public class NguoidungRepositoryImpl implements NguoidungRepository {
 
         s.refresh(nguoiDung);
         return nguoiDung;
+    }
+
+    @Override
+    public boolean authenticate(String taiKhoan, String matKhau) {
+        Nguoidung nd = this.getNguoiDungByTaiKhoan(taiKhoan);
+        return this.password.matches(matKhau, nd.getMatKhau());
     }
 }

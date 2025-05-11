@@ -17,6 +17,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -40,11 +42,19 @@ public class Hoadon implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "phuongThuc")
     private String phuongThuc;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianThanhToan")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianThanhToan;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "trangThai")
     private String trangThai;
     @JoinColumn(name = "idBooking", referencedColumnName = "id")
@@ -59,6 +69,13 @@ public class Hoadon implements Serializable {
 
     public Hoadon(Integer id) {
         this.id = id;
+    }
+
+    public Hoadon(Integer id, String phuongThuc, Date thoiGianThanhToan, String trangThai) {
+        this.id = id;
+        this.phuongThuc = phuongThuc;
+        this.thoiGianThanhToan = thoiGianThanhToan;
+        this.trangThai = trangThai;
     }
 
     public Integer getId() {

@@ -18,6 +18,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -39,7 +41,10 @@ public class Thongbao implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
     @Lob
+    @Size(min = 1, max = 65535)
     @Column(name = "noiDung")
     private String noiDung;
     @Column(name = "thoiGianThongBao")
@@ -54,6 +59,11 @@ public class Thongbao implements Serializable {
 
     public Thongbao(Integer id) {
         this.id = id;
+    }
+
+    public Thongbao(Integer id, String noiDung) {
+        this.id = id;
+        this.noiDung = noiDung;
     }
 
     public Integer getId() {

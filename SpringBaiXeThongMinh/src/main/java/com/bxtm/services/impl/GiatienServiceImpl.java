@@ -7,6 +7,9 @@ package com.bxtm.services.impl;
 import com.bxtm.pojo.Giatien;
 import com.bxtm.repositories.GiatienRepository;
 import com.bxtm.services.GiatienService;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +32,15 @@ public class GiatienServiceImpl implements GiatienService{
     @Override
     public Giatien createOrUpdate(Giatien giaTien) {
         return this.giaTienRepo.createOrUpdate(giaTien);
+    }
+
+    @Override
+    public List<Giatien> getGiaTienByBaiDo(int idBaiDo, Date selectedTime, int loaiNgay) {
+        Map<String,String> params = new HashMap<>();
+        params.put("idBaiDo", String.valueOf(idBaiDo));
+        params.put("time", new SimpleDateFormat("HH:mm:ss").format(selectedTime));
+        params.put("loaiNgay", String.valueOf(loaiNgay));
+        return this.giaTienRepo.getGiaTien(params);
     }
     
 }

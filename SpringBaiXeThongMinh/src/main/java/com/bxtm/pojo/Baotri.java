@@ -17,6 +17,8 @@ import jakarta.persistence.NamedQuery;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -40,12 +42,19 @@ public class Baotri implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianBatDau")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianBatDau;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianKetThuc")
     @Temporal(TemporalType.TIMESTAMP)
     private Date thoiGianKetThuc;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "tinhTrang")
     private String tinhTrang;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
@@ -57,6 +66,13 @@ public class Baotri implements Serializable {
 
     public Baotri(Integer id) {
         this.id = id;
+    }
+
+    public Baotri(Integer id, Date thoiGianBatDau, Date thoiGianKetThuc, String tinhTrang) {
+        this.id = id;
+        this.thoiGianBatDau = thoiGianBatDau;
+        this.thoiGianKetThuc = thoiGianKetThuc;
+        this.tinhTrang = tinhTrang;
     }
 
     public Integer getId() {

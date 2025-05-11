@@ -7,12 +7,16 @@ package com.bxtm.services;
 import com.bxtm.pojo.Nguoidung;
 import java.util.List;
 import java.util.Map;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
  * @author toquocbinh2102
  */
-public interface NguoidungService {
+public interface NguoidungService extends UserDetailsService{
     List<Nguoidung> getNguoiDung(Map<String,String> params);
     Nguoidung createOrUpdate(Nguoidung nguoiDung);
+    Nguoidung getNguoiDungByTaiKhoan(String taiKhoan);
+    boolean authenticate(String taiKhoan, String matKhau);
 }

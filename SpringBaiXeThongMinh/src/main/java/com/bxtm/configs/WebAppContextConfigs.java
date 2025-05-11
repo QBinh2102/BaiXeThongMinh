@@ -4,11 +4,20 @@
  */
 package com.bxtm.configs;
 
+import com.bxtm.formatters.BaidoFormatter;
+import com.bxtm.formatters.BookingFormatter;
+import com.bxtm.formatters.ChodoFormatter;
+import com.bxtm.formatters.LoaingayFormatter;
+import com.bxtm.formatters.NguoidungFormatter;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.format.FormatterRegistry;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.multipart.support.StandardServletMultipartResolver;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 /**
@@ -29,5 +38,23 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
     }
+
+    @Override
+    public void addFormatters(FormatterRegistry registry) {
+        registry.addFormatter(new BaidoFormatter());
+        registry.addFormatter(new ChodoFormatter());
+        registry.addFormatter(new BookingFormatter());
+        registry.addFormatter(new NguoidungFormatter());
+        registry.addFormatter(new LoaingayFormatter());
+    }
+
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        registry.addResourceHandler("/js/**").addResourceLocations("classpath:/static/js/");
+    }
     
+    @Bean
+    public StandardServletMultipartResolver multipartResolver() {
+        return new StandardServletMultipartResolver();
+    }
 }

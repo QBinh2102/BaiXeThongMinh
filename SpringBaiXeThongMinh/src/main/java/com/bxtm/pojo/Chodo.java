@@ -16,6 +16,8 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Set;
 
@@ -38,8 +40,14 @@ public class Chodo implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "viTri")
     private String viTri;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 50)
     @Column(name = "trangThai")
     private String trangThai;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
@@ -53,6 +61,12 @@ public class Chodo implements Serializable {
 
     public Chodo(Integer id) {
         this.id = id;
+    }
+
+    public Chodo(Integer id, String viTri, String trangThai) {
+        this.id = id;
+        this.viTri = viTri;
+        this.trangThai = trangThai;
     }
 
     public Integer getId() {

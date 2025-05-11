@@ -14,14 +14,13 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
+import jakarta.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
 
 /**
  *
@@ -44,16 +43,20 @@ public class Giatien implements Serializable {
     @Column(name = "id")
     private Integer id;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "giaTien")
     private BigDecimal giaTien;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianApDung")
     @Temporal(TemporalType.TIME)
     private Date thoiGianApDung;
+    @Basic(optional = false)
+    @NotNull
     @Column(name = "thoiGianKetThuc")
     @Temporal(TemporalType.TIME)
     private Date thoiGianKetThuc;
-    @OneToMany(mappedBy = "idGiaTien")
-    private Set<Booking> bookingSet;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
     @ManyToOne
     private Baido idBaiDo;
@@ -66,6 +69,13 @@ public class Giatien implements Serializable {
 
     public Giatien(Integer id) {
         this.id = id;
+    }
+
+    public Giatien(Integer id, BigDecimal giaTien, Date thoiGianApDung, Date thoiGianKetThuc) {
+        this.id = id;
+        this.giaTien = giaTien;
+        this.thoiGianApDung = thoiGianApDung;
+        this.thoiGianKetThuc = thoiGianKetThuc;
     }
 
     public Integer getId() {
@@ -98,14 +108,6 @@ public class Giatien implements Serializable {
 
     public void setThoiGianKetThuc(Date thoiGianKetThuc) {
         this.thoiGianKetThuc = thoiGianKetThuc;
-    }
-
-    public Set<Booking> getBookingSet() {
-        return bookingSet;
-    }
-
-    public void setBookingSet(Set<Booking> bookingSet) {
-        this.bookingSet = bookingSet;
     }
 
     public Baido getIdBaiDo() {

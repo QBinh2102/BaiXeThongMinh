@@ -5,6 +5,7 @@
 package com.bxtm.repositories;
 
 import com.bxtm.pojo.Baido;
+import com.bxtm.pojo.Danhgia;
 import java.util.List;
 import java.util.Map;
 
@@ -16,4 +17,5 @@ public interface BaidoRepository {
     List<Baido> getBaiDo(Map<String,String> params);
     Baido getBaiDoById(int id);
     Baido createOrUpdate(Baido baiDo);
+    List<Danhgia> getDanhGiaByBaiDo(int id);
 }
