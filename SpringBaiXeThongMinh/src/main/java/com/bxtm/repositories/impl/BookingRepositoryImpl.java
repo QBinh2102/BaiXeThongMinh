@@ -11,7 +11,9 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.text.ParseException;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +29,8 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Repository
 @Transactional
-public class BookingRepositoryImpl implements BookingRepository{
+public class BookingRepositoryImpl implements BookingRepository {
+
     @Autowired
     private LocalSessionFactoryBean factory;
 
@@ -41,6 +44,11 @@ public class BookingRepositoryImpl implements BookingRepository{
 
         if (params != null) {
             List<Predicate> predicates = new ArrayList<>();
+
+            String baiDo_id = params.get("idBaiDo");
+            if (baiDo_id != null && !baiDo_id.isEmpty()) {
+                predicates.add(cb.equal(root.get("idBaiDo").get("id").as(String.class), baiDo_id));
+            }
 
             String nguoiDung_id = params.get("idNguoiDung");
             if (nguoiDung_id != null && !nguoiDung_id.isEmpty()) {
@@ -56,28 +64,30 @@ public class BookingRepositoryImpl implements BookingRepository{
             if (trangThai != null && !trangThai.isEmpty()) {
                 predicates.add(cb.equal(root.get("trangThai").as(String.class), trangThai));
             }
-            
+
             String startTimeString = params.get("startTime");
             String endTimeString = params.get("endTime");
-            if (startTimeString != null && endTimeString != null) 
-            try {
-                LocalDateTime startTime = LocalDateTime.parse(startTimeString);
-                LocalDateTime endTime = LocalDateTime.parse(endTimeString);
-                
-                // Loc de lay ( loai tru cac cho da dat)
-                Predicate overlap = cb.or(
-                        cb.lessThan(root.get("thoiGianBatDau"), startTime),
-                        cb.greaterThan(root.get("thoiGianKetThuc"), startTime),
-                        cb.lessThan(root.get("thoiGianBatDau"), endTime),
-                        cb.greaterThan(root.get("thoiGianKetThuc"), endTime)
-                    );
-                    predicates.add(overlap);
-                } catch (Exception e) {
-                    System.err.println("Error");
-                }
+            if (startTimeString != null && endTimeString != null) {
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm");
+                LocalDateTime startTime = LocalDateTime.parse(startTimeString, formatter);
+                LocalDateTime endTime = LocalDateTime.parse(endTimeString, formatter);
 
-                q.where(predicates.toArray(Predicate[]::new));
+                Predicate timePredicate = cb.and(
+                        cb.equal(root.get("trangThai"), "Đang đặt"),
+                        cb.or(
+                                cb.between(root.get("thoiGianBatDau"), startTime, endTime),
+                                cb.between(root.get("thoiGianKetThuc"), startTime, endTime),
+                                cb.and(
+                                        cb.lessThanOrEqualTo(root.get("thoiGianBatDau"), startTime),
+                                        cb.greaterThanOrEqualTo(root.get("thoiGianKetThuc"), endTime)
+                                )
+                        )
+                );
+                predicates.add(timePredicate);
             }
+
+            q.where(predicates.toArray(Predicate[]::new));
+        }
         Query query = s.createQuery(q);
 
         return query.getResultList();

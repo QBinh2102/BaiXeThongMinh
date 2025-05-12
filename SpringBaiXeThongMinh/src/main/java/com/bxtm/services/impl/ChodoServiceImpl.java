@@ -23,10 +23,11 @@ import org.springframework.stereotype.Service;
  * @author toquocbinh2102
  */
 @Service
-public class ChodoServiceImpl implements ChodoService{
+public class ChodoServiceImpl implements ChodoService {
+
     @Autowired
     private ChodoRepository choDoRepo;
-    
+
     @Autowired
     private BookingService bookingService;
 
@@ -39,29 +40,33 @@ public class ChodoServiceImpl implements ChodoService{
     public Chodo createOrUpdate(Chodo choDo) {
         return this.choDoRepo.createOrUpdate(choDo);
     }
+
     // tạo thêm GetChoDoTrong 
     @Override
-    public List<Chodo> getChoDoTrong(Map<String,String> params, LocalDateTime startTime, LocalDateTime endTime)
-    {
-        
+    public List<Chodo> getChoDoTrong(Map<String, String> params, LocalDateTime startTime, LocalDateTime endTime) {
+
         List<Chodo> choDoByID = this.choDoRepo.getChoDo(params);
-        // Goi bookingService ve lay het Booking
-        // Lay het booking theo tung choDoByID  ( lay may thang bi dat - ra )
-        Map<String,String> paramsBooking = new HashMap();
-        
+        Map<String, String> paramsBooking = new HashMap();
+        paramsBooking.put("idBaiDo", params.get("idBaiDo"));
         paramsBooking.put("startTime", String.valueOf(startTime));
         paramsBooking.put("endTime", String.valueOf(endTime));
+        //paramsBooking.put("trangThai", "Đang đặt");
         List<Booking> bookingDaDat = this.bookingService.getBookings(paramsBooking);
-         Set<Integer> choDaBiDatIds = bookingDaDat.stream()
-        .map(b -> b.getIdChoDo().getId())
-        .collect(Collectors.toSet());
 
-        // B4: Lọc ra các chỗ đỗ chưa bị đặt và đang hoạt động (trạng thái != 'Bảo trì')
-        List<Chodo> choDoTrong = choDoByID.stream()
-            .filter(cho -> !choDaBiDatIds.contains(cho.getId()) && !"Bảo trì".equalsIgnoreCase(cho.getTrangThai()))
-            .collect(Collectors.toList());
+//        for(int i = 0 ; i<bookingDaDat.size();i++){
+//            for(int j = 0;j<choDoByID.size();j++){
+//                if(choDoByID.get(j).equals(bookingDaDat.get(i).getIdChoDo())){
+//                    choDoByID.remove(j);
+//                    break;
+//                }
+//            }
+//        }
+        Set<Integer> idChoDoDaDat = bookingDaDat.stream()
+                .map(booking -> booking.getIdChoDo().getId())
+                .collect(Collectors.toSet());
 
-        return choDoTrong;
-        
+        choDoByID.removeIf(choDo -> idChoDoDaDat.contains(choDo.getId()));
+
+        return choDoByID;
     }
 }

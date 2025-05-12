@@ -83,6 +83,9 @@ public class Baido implements Serializable {
     private Set<Chodo> chodoSet;
     @OneToMany(mappedBy = "idBaiDo")
     @JsonIgnore
+    private Set<Booking> bookingSet;
+    @OneToMany(mappedBy = "idBaiDo")
+    @JsonIgnore
     private Set<Danhgia> danhgiaSet;
     @OneToMany(mappedBy = "idBaiDo")
     @JsonIgnore
@@ -176,6 +179,14 @@ public class Baido implements Serializable {
 
     public void setChodoSet(Set<Chodo> chodoSet) {
         this.chodoSet = chodoSet;
+    }
+
+    public Set<Booking> getBookingSet() {
+        return bookingSet;
+    }
+
+    public void setBookingSet(Set<Booking> bookingSet) {
+        this.bookingSet = bookingSet;
     }
 
     public Set<Danhgia> getDanhgiaSet() {

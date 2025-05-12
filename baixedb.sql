@@ -32,7 +32,7 @@ CREATE TABLE `baido` (
   `anhBai` varchar(255) DEFAULT NULL,
   `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,7 +41,7 @@ CREATE TABLE `baido` (
 
 LOCK TABLES `baido` WRITE;
 /*!40000 ALTER TABLE `baido` DISABLE KEYS */;
-INSERT INTO `baido` VALUES (1,'Bãi xe A','1 Lê Lợi, Q1',3,10000.00,'Bảo vệ 24/7, Camera',NULL,'Hoạt động'),(2,'Bãi xe B','20 Trần Hưng Đạo, Q5',3,20000.00,'Wifi miễn phí',NULL,'Hoạt động'),(3,'Bãi xe C','75 Nguyễn Trãi, Q3',3,15000.00,'Có mái che',NULL,'Bảo trì'),(4,'Bãi đỗ D','TPHCM',4,12000.00,'Có trạm đỗ xăng','https://res.cloudinary.com/dbhhpljbo/image/upload/v1747021364/fdag244fsiupzz3lzk5q.png','Bảo trì'),(5,'Bãi đỗ E','Hà Nội',2,8000.00,'Cửa hàng tiện lợi','https://res.cloudinary.com/dbhhpljbo/image/upload/v1747029371/nqnsmu5je97optylcahs.png','Hoạt động');
+INSERT INTO `baido` VALUES (1,'Bãi xe A','1 Lê Lợi, Q1',3,10000.00,'Bảo vệ 24/7, Camera',NULL,'Hoạt động'),(2,'Bãi xe B','20 Trần Hưng Đạo, Q5',3,20000.00,'Wifi miễn phí',NULL,'Hoạt động'),(3,'Bãi xe C','75 Nguyễn Trãi, Q3',3,15000.00,'Có mái che',NULL,'Bảo trì');
 /*!40000 ALTER TABLE `baido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -83,6 +83,7 @@ DROP TABLE IF EXISTS `booking`;
 /*!50503 SET character_set_client = utf8mb4 */;
 CREATE TABLE `booking` (
   `id` int NOT NULL AUTO_INCREMENT,
+  `idBaiDo` int DEFAULT NULL,
   `idChoDo` int DEFAULT NULL,
   `idNguoiDung` int DEFAULT NULL,
   `thanhTien` decimal(10,2) NOT NULL,
@@ -91,10 +92,12 @@ CREATE TABLE `booking` (
   `thoiGianKetThuc` datetime NOT NULL,
   `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`),
+  KEY `idBaiDo` (`idBaiDo`),
   KEY `idChoDo` (`idChoDo`),
   KEY `idNguoiDung` (`idNguoiDung`),
-  CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`idChoDo`) REFERENCES `chodo` (`id`),
-  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`idNguoiDung`) REFERENCES `nguoidung` (`id`)
+  CONSTRAINT `booking_ibfk_1` FOREIGN KEY (`idBaiDo`) REFERENCES `baido` (`id`),
+  CONSTRAINT `booking_ibfk_2` FOREIGN KEY (`idChoDo`) REFERENCES `chodo` (`id`),
+  CONSTRAINT `booking_ibfk_3` FOREIGN KEY (`idNguoiDung`) REFERENCES `nguoidung` (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -104,7 +107,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (1,1,1,10000.00,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,2,2,20000.00,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,3,1,20000.00,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
+INSERT INTO `booking` VALUES (1,1,1,1,10000.00,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,1,2,2,20000.00,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,2,4,1,20000.00,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -236,7 +239,7 @@ CREATE TABLE `nguoidung` (
 
 LOCK TABLES `nguoidung` WRITE;
 /*!40000 ALTER TABLE `nguoidung` DISABLE KEYS */;
-INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','123456','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,'ROLE_USER',1),(2,'Trần Thị B','user2','123456','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,'ROLE_USER',1),(3,'Admin C','admin','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,'ROLE_ADMIN',1);
+INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,'ROLE_USER',1),(2,'Trần Thị B','user2','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,'ROLE_USER',1),(3,'Admin C','admin','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,'ROLE_ADMIN',1);
 /*!40000 ALTER TABLE `nguoidung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -304,4 +307,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-12 12:57:24
+-- Dump completed on 2025-05-12 21:40:50

@@ -72,6 +72,9 @@ public class Booking implements Serializable {
     @Size(min = 1, max = 50)
     @Column(name = "trangThai")
     private String trangThai;
+    @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
+    @ManyToOne
+    private Baido idBaiDo;
     @JoinColumn(name = "idChoDo", referencedColumnName = "id")
     @ManyToOne
     private Chodo idChoDo;
@@ -143,6 +146,14 @@ public class Booking implements Serializable {
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
+    }
+
+    public Baido getIdBaiDo() {
+        return idBaiDo;
+    }
+
+    public void setIdBaiDo(Baido idBaiDo) {
+        this.idBaiDo = idBaiDo;
     }
 
     public Chodo getIdChoDo() {
