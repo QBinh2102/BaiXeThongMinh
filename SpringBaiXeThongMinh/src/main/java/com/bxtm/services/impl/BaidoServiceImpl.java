@@ -49,21 +49,38 @@ public class BaidoServiceImpl implements BaidoService{
         return baiDo;
     }
     
-    @Override
+   @Override
     public Baido createOrUpdate(Baido baiDo) {
-        if(baiDo.getId()==null){
+        boolean isNew = baiDo.getId() == null;
+
+        if (isNew) {
             baiDo.setTrangThai("Hoạt động");
         }
-        if(baiDo.getFile() != null && !baiDo.getFile().isEmpty()){
-                try {
-                    Map res = cloudinary.uploader().upload(baiDo.getFile().getBytes(),
-                            ObjectUtils.asMap("resource_type", "auto"));
-                    baiDo.setAnhBai(res.get("secure_url").toString());
-                } catch (IOException ex) {
-                    Logger.getLogger(BaidoServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-                }
+
+        if (baiDo.getFile() != null && !baiDo.getFile().isEmpty()) {
+            try {
+                Map res = cloudinary.uploader().upload(baiDo.getFile().getBytes(),
+                        ObjectUtils.asMap("resource_type", "auto"));
+                baiDo.setAnhBai(res.get("secure_url").toString());
+            } catch (IOException ex) {
+                Logger.getLogger(BaidoServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
-        return this.baiDoRepo.createOrUpdate(baiDo);
+        }
+
+        // Lưu bãi đỗ trước khi tạo chỗ đỗ
+        baiDo = this.baiDoRepo.createOrUpdate(baiDo);
+
+        if (isNew && baiDo.getSoLuong() > 0) {
+            for (int i = 1; i <= baiDo.getSoLuong(); i++) {
+                Chodo chodo = new Chodo();
+                chodo.setViTri(String.valueOf(i));
+                chodo.setTrangThai("Bình thường");
+                chodo.setIdBaiDo(baiDo); 
+                this.choDoRepo.createOrUpdate(chodo);
+            }
+        }
+
+        return baiDo;
     }
 
     @Override

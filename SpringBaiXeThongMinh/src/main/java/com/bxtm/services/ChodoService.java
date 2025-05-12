@@ -17,4 +17,5 @@ public interface ChodoService {
     List<Chodo> getChoDo(Map<String,String> params);
     Chodo createOrUpdate(Chodo choDo);
     List<Chodo> getChoDoTrong(Map<String,String> params, LocalDateTime startTime, LocalDateTime endTime);
+    public Chodo getChoDoById(int id);
 }

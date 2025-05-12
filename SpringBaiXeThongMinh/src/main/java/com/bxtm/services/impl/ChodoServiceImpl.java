@@ -37,6 +37,11 @@ public class ChodoServiceImpl implements ChodoService {
     }
 
     @Override
+    public Chodo getChoDoById(int id) {
+        return this.choDoRepo.getChoDoById(id);
+    }
+
+    @Override
     public Chodo createOrUpdate(Chodo choDo) {
         return this.choDoRepo.createOrUpdate(choDo);
     }
