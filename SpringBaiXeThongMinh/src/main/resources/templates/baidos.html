@@ -23,22 +23,25 @@
                     <th></th>
                 </tr>
             </thead>
-            <tbody>
-                <tr th:each="bd : ${baidos}">
-                    <td>
-                        <img th:src="${bd.anhBai}" width="200"/>
-                    </td>
-                    <td th:text="${bd.ten}"></td>
-                    <td th:text="${bd.diaChi}"></td>
-                    <td th:text="${bd.soLuong}"></td>
-                    <td th:text="${bd.giaTien}"></td>
-                    <td th:text="${bd.trangThai}"></td>
-                    <td>
-                        <button class="btn btn-danger">&times;</button>
-                        <a th:href="@{'/baidos/' + ${bd.id}}" class="btn btn-info">&Alpha;</a>
-                    </td>
-                </tr>
-            </tbody>
+                        <tbody>
+                 <tr th:each="bd : ${baidos}">
+                     <td>
+                         <img th:src="${bd.anhBai}" width="200"/>
+                     </td>
+                     <td th:text="${bd.ten}"></td>
+                     <td th:text="${bd.diaChi}"></td>
+                     <td th:text="${bd.soLuong}"></td>
+                     <td th:text="${bd.giaTien}"></td>
+                     <td th:text="${bd.trangThai}"></td>
+                     <td>
+<!--                         /baidos/{idBaiDo}/choDo-->
+                         <a th:href="@{'/baidos/'+ ${bd.id} +'/choDo/'}" class="btn btn-info">Xem chi tiết</a>
+                         <a th:href="@{'/baidos/' + ${bd.id}}" class="btn btn-primary">Sửa</a>
+                         <button class="btn btn-danger">&times;</button>
+                     </td>
+                 </tr>
+             </tbody>
+
         </table>
     </main>
 

@@ -5,6 +5,7 @@
 package com.bxtm.repositories;
 
 import com.bxtm.pojo.Chodo;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -17,4 +18,5 @@ public interface ChodoRepository {
     Chodo getChoDoById(int id);
     Chodo createOrUpdate(Chodo choDo);
     void deleteChoDo(int id);
+//    List<Chodo> getChoDoTrong(int idBaiDo, LocalDateTime start, LocalDateTime end);
 }

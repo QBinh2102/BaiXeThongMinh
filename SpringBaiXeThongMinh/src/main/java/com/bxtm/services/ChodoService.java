@@ -5,6 +5,7 @@
 package com.bxtm.services;
 
 import com.bxtm.pojo.Chodo;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -15,4 +16,5 @@ import java.util.Map;
 public interface ChodoService {
     List<Chodo> getChoDo(Map<String,String> params);
     Chodo createOrUpdate(Chodo choDo);
+    List<Chodo> getChoDoTrong(Map<String,String> params, LocalDateTime startTime, LocalDateTime endTime);
 }

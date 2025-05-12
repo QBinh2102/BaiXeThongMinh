@@ -6,6 +6,11 @@ package com.bxtm.services;
 
 import com.bxtm.pojo.Baido;
 import com.bxtm.pojo.Danhgia;
+import com.bxtm.pojo.Chodo;
+
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -18,4 +23,7 @@ public interface BaidoService {
     Baido getBaiDoById(int id);
     Baido createOrUpdate(Baido baiDo);
     List<Danhgia> getDanhGiaByBaiDo(int id);
+//    BigDecimal tinhTien (Baido baido, LocalDateTime startTime, LocalDateTime endTime);
+//    List<Chodo> getChoDoTrong(int idBaiDo, LocalDateTime start, LocalDateTime end);
 }
+

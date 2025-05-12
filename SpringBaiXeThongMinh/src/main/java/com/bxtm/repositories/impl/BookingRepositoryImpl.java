@@ -11,6 +11,7 @@ import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -55,9 +56,28 @@ public class BookingRepositoryImpl implements BookingRepository{
             if (trangThai != null && !trangThai.isEmpty()) {
                 predicates.add(cb.equal(root.get("trangThai").as(String.class), trangThai));
             }
+            
+            String startTimeString = params.get("startTime");
+            String endTimeString = params.get("endTime");
+            if (startTimeString != null && endTimeString != null) 
+            try {
+                LocalDateTime startTime = LocalDateTime.parse(startTimeString);
+                LocalDateTime endTime = LocalDateTime.parse(endTimeString);
+                
+                // Loc de lay ( loai tru cac cho da dat)
+                Predicate overlap = cb.or(
+                        cb.lessThan(root.get("thoiGianBatDau"), startTime),
+                        cb.greaterThan(root.get("thoiGianKetThuc"), startTime),
+                        cb.lessThan(root.get("thoiGianBatDau"), endTime),
+                        cb.greaterThan(root.get("thoiGianKetThuc"), endTime)
+                    );
+                    predicates.add(overlap);
+                } catch (Exception e) {
+                    System.err.println("Error");
+                }
 
-            q.where(predicates.toArray(Predicate[]::new));
-        }
+                q.where(predicates.toArray(Predicate[]::new));
+            }
         Query query = s.createQuery(q);
 
         return query.getResultList();

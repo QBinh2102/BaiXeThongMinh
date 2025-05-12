@@ -59,7 +59,7 @@ public class SpringSecurityConfigs {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(c -> c.disable()).authorizeHttpRequests(requests 
-                -> requests.requestMatchers("/**", "/home", "/baidos", "/baido", "/add", "/baidos/**").authenticated()
+                -> requests.requestMatchers("/**", "/home", "/baidos", "/baido", "/add", "/baidos/**","baidos/**/choDo","baidos/**/choDo/").authenticated()
                         .requestMatchers("/js/**").permitAll()
                         .requestMatchers("/api/**").permitAll())
                 .formLogin(form -> form.loginPage("/login")
