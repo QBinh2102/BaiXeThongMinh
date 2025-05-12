@@ -127,7 +127,6 @@ public class Nguoidung implements Serializable {
     @JsonIgnore
     private Set<Danhgia> danhgiaSet;
     @Transient
-    @JsonIgnore
     private MultipartFile file;
 
     public Nguoidung() {

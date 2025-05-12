@@ -24,7 +24,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -43,6 +42,11 @@ public class NguoidungServiceImpl implements NguoidungService{
     @Override
     public List<Nguoidung> getNguoiDung(Map<String, String> params) {
         return this.nguoiDungRepo.getNguoiDung(params);
+    }
+    
+    @Override
+    public Nguoidung getNguoiDungById(int idNguoiDung) {
+        return this.nguoiDungRepo.getNguoiDungById(idNguoiDung);
     }
 
     @Override

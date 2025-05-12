@@ -16,33 +16,6 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `anhbai`
---
-
-DROP TABLE IF EXISTS `anhbai`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `anhbai` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idBaiDo` int DEFAULT NULL,
-  `anhBai` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idBaiDo` (`idBaiDo`),
-  CONSTRAINT `anhbai_ibfk_1` FOREIGN KEY (`idBaiDo`) REFERENCES `baido` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `anhbai`
---
-
-LOCK TABLES `anhbai` WRITE;
-/*!40000 ALTER TABLE `anhbai` DISABLE KEYS */;
-INSERT INTO `anhbai` VALUES (1,1,NULL),(2,2,NULL),(3,3,NULL);
-/*!40000 ALTER TABLE `anhbai` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `baido`
 --
 
@@ -54,10 +27,12 @@ CREATE TABLE `baido` (
   `ten` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `diaChi` varchar(255) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   `soLuong` int NOT NULL,
+  `giaTien` decimal(10,2) NOT NULL,
   `tienIch` text,
+  `anhBai` varchar(255) DEFAULT NULL,
   `trangThai` varchar(50) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -66,7 +41,7 @@ CREATE TABLE `baido` (
 
 LOCK TABLES `baido` WRITE;
 /*!40000 ALTER TABLE `baido` DISABLE KEYS */;
-INSERT INTO `baido` VALUES (1,'Bãi xe A','1 Lê Lợi, Q1',3,'Bảo vệ 24/7, Camera','Hoạt động'),(2,'Bãi xe B','20 Trần Hưng Đạo, Q5',3,'Wifi miễn phí','Hoạt động'),(3,'Bãi xe C','75 Nguyễn Trãi, Q3',3,'Có mái che','Bảo trì');
+INSERT INTO `baido` VALUES (1,'Bãi xe A','1 Lê Lợi, Q1',3,10000.00,'Bảo vệ 24/7, Camera',NULL,'Hoạt động'),(2,'Bãi xe B','20 Trần Hưng Đạo, Q5',3,20000.00,'Wifi miễn phí',NULL,'Hoạt động'),(3,'Bãi xe C','75 Nguyễn Trãi, Q3',3,15000.00,'Có mái che',NULL,'Bảo trì'),(4,'Bãi đỗ D','TPHCM',4,12000.00,'Có trạm đỗ xăng','https://res.cloudinary.com/dbhhpljbo/image/upload/v1747021364/fdag244fsiupzz3lzk5q.png','Bảo trì'),(5,'Bãi đỗ E','Hà Nội',2,8000.00,'Cửa hàng tiện lợi','https://res.cloudinary.com/dbhhpljbo/image/upload/v1747029371/nqnsmu5je97optylcahs.png','Hoạt động');
 /*!40000 ALTER TABLE `baido` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -195,38 +170,6 @@ INSERT INTO `danhgia` VALUES (1,1,1,5,'Rộng rãi, dễ đỗ','2025-05-10 09:0
 UNLOCK TABLES;
 
 --
--- Table structure for table `giatien`
---
-
-DROP TABLE IF EXISTS `giatien`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `giatien` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idBaiDo` int DEFAULT NULL,
-  `idLoaiNgay` int DEFAULT NULL,
-  `giaTien` decimal(10,2) NOT NULL,
-  `thoiGianApDung` time NOT NULL,
-  `thoiGianKetThuc` time NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `idBaiDo` (`idBaiDo`),
-  KEY `idLoaiNgay` (`idLoaiNgay`),
-  CONSTRAINT `giatien_ibfk_1` FOREIGN KEY (`idBaiDo`) REFERENCES `baido` (`id`),
-  CONSTRAINT `giatien_ibfk_2` FOREIGN KEY (`idLoaiNgay`) REFERENCES `loaingay` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `giatien`
---
-
-LOCK TABLES `giatien` WRITE;
-/*!40000 ALTER TABLE `giatien` DISABLE KEYS */;
-INSERT INTO `giatien` VALUES (1,1,1,10000.00,'07:00:00','18:00:00'),(2,1,1,20000.00,'18:00:00','07:00:00'),(3,1,2,20000.00,'07:00:00','18:00:00'),(4,1,2,40000.00,'18:00:00','07:00:00'),(5,2,1,20000.00,'08:00:00','18:00:00'),(6,2,1,25000.00,'18:00:00','08:00:00'),(7,3,1,15000.00,'09:00:00','17:00:00'),(8,3,1,25000.00,'17:00:00','09:00:00');
-/*!40000 ALTER TABLE `giatien` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `hoadon`
 --
 
@@ -259,32 +202,6 @@ INSERT INTO `hoadon` VALUES (1,1,1,'Tiền mặt','2025-05-10 09:05:00','Đã th
 UNLOCK TABLES;
 
 --
--- Table structure for table `loaingay`
---
-
-DROP TABLE IF EXISTS `loaingay`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `loaingay` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `tenLe` varchar(100) CHARACTER SET utf8mb3 COLLATE utf8mb3_general_ci NOT NULL,
-  `ngayApDung` date DEFAULT NULL,
-  `ngayKetThuc` date DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `loaingay`
---
-
-LOCK TABLES `loaingay` WRITE;
-/*!40000 ALTER TABLE `loaingay` DISABLE KEYS */;
-INSERT INTO `loaingay` VALUES (1,'Ngày thường',NULL,NULL),(2,'Lễ 30/4','2025-04-30','2025-05-01');
-/*!40000 ALTER TABLE `loaingay` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `nguoidung`
 --
 
@@ -310,7 +227,7 @@ CREATE TABLE `nguoidung` (
   UNIQUE KEY `taiKhoan` (`taiKhoan`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `cccd` (`cccd`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -319,7 +236,7 @@ CREATE TABLE `nguoidung` (
 
 LOCK TABLES `nguoidung` WRITE;
 /*!40000 ALTER TABLE `nguoidung` DISABLE KEYS */;
-INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','123456','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,'ROLE_USER',1),(2,'Trần Thị B','user2','123456','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,'ROLE_USER',1),(3,'Admin C','admin','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,'ROLE_ADMIN',1),(4,'Tô Quốc Bình','binh2102','$2a$10$Yzc2YC67PECix/WdHmLubOy1Ek7EFird0ZAGpnifv0Qc1Ql43fWiS','toquocbinh2102@gmail.com','0762590966','0123456789','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746962679/clsxz3q3gy3bbnbwzzag.png','ROLE_USER',1),(5,'Tô Quốc Bình','binh2004','$2a$10$pP63mcAvmdua0oFdqnjw3OQ62uA3zBpnGHflR5583QT3RlVGXJ.dq','toquocbinh@gmail.com','0762590966','0987654321','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746962942/onetaj4waqwuv70hurv9.png','ROLE_USER',1),(6,'Tô Quốc Bình','qbinh','$2a$10$VTtDTke1QKowLdrR/kOsCelilNp3QExVS3yfJP2m34OW8CxLq.SN2','toquocbinh2004@gmail.com','0762590966','0987654322','Vision','59X1-123.45','Xanh',NULL,'https://res.cloudinary.com/dbhhpljbo/image/upload/v1746963011/du052nojalxhqcyjwtfv.png','ROLE_USER',1);
+INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','123456','user1@example.com','0911111111','111111111','Honda','59X1-123.45','Đỏ',NULL,NULL,'ROLE_USER',1),(2,'Trần Thị B','user2','123456','user2@example.com','0922222222','222222222','Toyota','51H-456.78','Trắng',NULL,NULL,'ROLE_USER',1),(3,'Admin C','admin','$2a$10$5X9k5N1sTc1/CjVH5XJoje3QMYijH3ETpgkox00R0MdPaJPPrf7wO','admin@example.com','0933333333','333333333','Mazda','51A-999.99','Đen',NULL,NULL,'ROLE_ADMIN',1);
 /*!40000 ALTER TABLE `nguoidung` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -387,4 +304,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-11 18:34:50
+-- Dump completed on 2025-05-12 12:57:24

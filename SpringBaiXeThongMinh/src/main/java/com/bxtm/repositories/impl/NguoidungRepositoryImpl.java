@@ -79,6 +79,14 @@ public class NguoidungRepositoryImpl implements NguoidungRepository {
     }
     
     @Override
+    public Nguoidung getNguoiDungById(int idNguoiDung) {
+        Session s = this.factory.getObject().getCurrentSession();
+        Query q = s.createNamedQuery("Nguoidung.findById", Nguoidung.class);
+        q.setParameter("id", idNguoiDung);
+        return (Nguoidung) q.getSingleResult();
+    }
+    
+    @Override
     public Nguoidung getNguoiDungByTaiKhoan(String taiKhoan) {
         Session s = this.factory.getObject().getCurrentSession();
         Query q = s.createNamedQuery("Nguoidung.findByTaiKhoan", Nguoidung.class);

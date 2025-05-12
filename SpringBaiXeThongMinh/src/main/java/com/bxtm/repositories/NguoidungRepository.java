@@ -14,6 +14,7 @@ import java.util.Map;
  */
 public interface NguoidungRepository {
     List<Nguoidung> getNguoiDung(Map<String,String> params);
+    Nguoidung getNguoiDungById(int idNguoiDung);
     Nguoidung getNguoiDungByTaiKhoan(String taiKhoan);
     Nguoidung createOrUpdate(Nguoidung nguoiDung);
     boolean authenticate(String taiKhoan, String matKhau);

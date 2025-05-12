@@ -16,10 +16,13 @@ import jakarta.persistence.NamedQueries;
 import jakarta.persistence.NamedQuery;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.persistence.Transient;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Set;
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  *
@@ -33,6 +36,8 @@ import java.util.Set;
     @NamedQuery(name = "Baido.findByTen", query = "SELECT b FROM Baido b WHERE b.ten = :ten"),
     @NamedQuery(name = "Baido.findByDiaChi", query = "SELECT b FROM Baido b WHERE b.diaChi = :diaChi"),
     @NamedQuery(name = "Baido.findBySoLuong", query = "SELECT b FROM Baido b WHERE b.soLuong = :soLuong"),
+    @NamedQuery(name = "Baido.findByGiaTien", query = "SELECT b FROM Baido b WHERE b.giaTien = :giaTien"),
+    @NamedQuery(name = "Baido.findByAnhBai", query = "SELECT b FROM Baido b WHERE b.anhBai = :anhBai"),
     @NamedQuery(name = "Baido.findByTrangThai", query = "SELECT b FROM Baido b WHERE b.trangThai = :trangThai")})
 public class Baido implements Serializable {
 
@@ -56,10 +61,18 @@ public class Baido implements Serializable {
     @NotNull
     @Column(name = "soLuong")
     private int soLuong;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "giaTien")
+    private BigDecimal giaTien;
     @Lob
     @Size(max = 65535)
     @Column(name = "tienIch")
     private String tienIch;
+    @Size(max = 255)
+    @Column(name = "anhBai")
+    private String anhBai;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 50)
@@ -70,16 +83,12 @@ public class Baido implements Serializable {
     private Set<Chodo> chodoSet;
     @OneToMany(mappedBy = "idBaiDo")
     @JsonIgnore
-    private Set<Giatien> giatienSet;
-    @OneToMany(mappedBy = "idBaiDo")
-    @JsonIgnore
-    private Set<Anhbai> anhbaiSet;
-    @OneToMany(mappedBy = "idBaiDo")
-    @JsonIgnore
     private Set<Danhgia> danhgiaSet;
     @OneToMany(mappedBy = "idBaiDo")
     @JsonIgnore
     private Set<Baotri> baotriSet;
+    @Transient
+    private MultipartFile file;
 
     public Baido() {
     }
@@ -88,11 +97,12 @@ public class Baido implements Serializable {
         this.id = id;
     }
 
-    public Baido(Integer id, String ten, String diaChi, int soLuong, String trangThai) {
+    public Baido(Integer id, String ten, String diaChi, int soLuong, BigDecimal giaTien, String trangThai) {
         this.id = id;
         this.ten = ten;
         this.diaChi = diaChi;
         this.soLuong = soLuong;
+        this.giaTien = giaTien;
         this.trangThai = trangThai;
     }
 
@@ -128,12 +138,28 @@ public class Baido implements Serializable {
         this.soLuong = soLuong;
     }
 
+    public BigDecimal getGiaTien() {
+        return giaTien;
+    }
+
+    public void setGiaTien(BigDecimal giaTien) {
+        this.giaTien = giaTien;
+    }
+
     public String getTienIch() {
         return tienIch;
     }
 
     public void setTienIch(String tienIch) {
         this.tienIch = tienIch;
+    }
+
+    public String getAnhBai() {
+        return anhBai;
+    }
+
+    public void setAnhBai(String anhBai) {
+        this.anhBai = anhBai;
     }
 
     public String getTrangThai() {
@@ -150,22 +176,6 @@ public class Baido implements Serializable {
 
     public void setChodoSet(Set<Chodo> chodoSet) {
         this.chodoSet = chodoSet;
-    }
-
-    public Set<Giatien> getGiatienSet() {
-        return giatienSet;
-    }
-
-    public void setGiatienSet(Set<Giatien> giatienSet) {
-        this.giatienSet = giatienSet;
-    }
-
-    public Set<Anhbai> getAnhbaiSet() {
-        return anhbaiSet;
-    }
-
-    public void setAnhbaiSet(Set<Anhbai> anhbaiSet) {
-        this.anhbaiSet = anhbaiSet;
     }
 
     public Set<Danhgia> getDanhgiaSet() {
@@ -207,6 +217,20 @@ public class Baido implements Serializable {
     @Override
     public String toString() {
         return "com.bxtm.pojo.Baido[ id=" + id + " ]";
+    }
+
+    /**
+     * @return the file
+     */
+    public MultipartFile getFile() {
+        return file;
+    }
+
+    /**
+     * @param file the file to set
+     */
+    public void setFile(MultipartFile file) {
+        this.file = file;
     }
     
 }

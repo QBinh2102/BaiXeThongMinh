@@ -6,7 +6,6 @@ package com.bxtm.services;
 
 import com.bxtm.pojo.Baido;
 import com.bxtm.pojo.Danhgia;
-import com.bxtm.pojo.Giatien;
 import java.util.List;
 import java.util.Map;
 
@@ -19,5 +18,4 @@ public interface BaidoService {
     Baido getBaiDoById(int id);
     Baido createOrUpdate(Baido baiDo);
     List<Danhgia> getDanhGiaByBaiDo(int id);
-    Map<Integer,List<Giatien>> getBaiDoWithGiaTienByLoaiNgay(List<Baido> baidos, int idLoaiNgay);
 }

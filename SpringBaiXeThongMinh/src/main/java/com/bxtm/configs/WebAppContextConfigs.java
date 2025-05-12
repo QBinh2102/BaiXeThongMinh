@@ -7,7 +7,6 @@ package com.bxtm.configs;
 import com.bxtm.formatters.BaidoFormatter;
 import com.bxtm.formatters.BookingFormatter;
 import com.bxtm.formatters.ChodoFormatter;
-import com.bxtm.formatters.LoaingayFormatter;
 import com.bxtm.formatters.NguoidungFormatter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -45,7 +44,6 @@ public class WebAppContextConfigs implements WebMvcConfigurer{
         registry.addFormatter(new ChodoFormatter());
         registry.addFormatter(new BookingFormatter());
         registry.addFormatter(new NguoidungFormatter());
-        registry.addFormatter(new LoaingayFormatter());
     }
 
     @Override
