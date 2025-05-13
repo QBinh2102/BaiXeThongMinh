@@ -45,7 +45,7 @@ public class BaidoServiceImpl implements BaidoService{
         return baiDo;
     }
     
-   @Override
+    @Override
     public Baido createOrUpdate(Baido baiDo) {
         boolean isNew = baiDo.getId() == null;
 
@@ -61,6 +61,12 @@ public class BaidoServiceImpl implements BaidoService{
             } catch (IOException ex) {
                 Logger.getLogger(BaidoServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
             }
+        } // Nếu không có file upload mới và đang cập nhật, giữ nguyên ảnh cũ
+        else if (!isNew) {
+            Baido existing = this.baiDoRepo.getBaiDoById(baiDo.getId());
+            if (existing != null) {
+                baiDo.setAnhBai(existing.getAnhBai());
+            }
         }
 
         // Lưu bãi đỗ trước khi tạo chỗ đỗ
@@ -71,11 +77,12 @@ public class BaidoServiceImpl implements BaidoService{
                 Chodo chodo = new Chodo();
                 chodo.setViTri(String.valueOf(i));
                 chodo.setTrangThai("Bình thường");
-                chodo.setIdBaiDo(baiDo); 
+                chodo.setIdBaiDo(baiDo);
                 this.choDoRepo.createOrUpdate(chodo);
             }
         }
 
         return baiDo;
     }
+
 }

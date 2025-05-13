@@ -35,9 +35,20 @@
                             th:selected="${baido.trangThai == 'Bảo trì'}">Bảo trì</option>
                 </select>
             </div>
+           <div class="mb-3 mt-3" th:if="${baido.id != null && baido.anhBai != null}">
+                <label>Ảnh hiện tại:</label><br/>
+                <img th:src="${baido.anhBai}" alt="Ảnh bãi đỗ" style="max-height: 200px;" />
+            </div>
+
+            <!-- Upload ảnh mới -->
             <div class="mb-3 mt-3">
                 <input type="file" class="form-control" th:field="*{file}" />
             </div>
+
+            <!-- Trường ẩn: giữ lại ảnh cũ nếu không upload ảnh mới -->
+            <input type="hidden" th:field="*{anhBai}" />
+
+
 
             <input type="hidden" th:field="*{id}" />
             <button type="submit" class="btn btn-primary" th:if="${baido.id == null}">Thêm bãi đỗ</button>
