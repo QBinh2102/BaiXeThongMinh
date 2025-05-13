@@ -25,10 +25,15 @@ public class BaotriServiceImpl implements BaotriService{
     public List<Baotri> getBaoTri(Map<String, String> params) {
         return this.baoTriRepo.getBaoTri(params);
     }
+    
+    @Override
+    public Baotri getBaoTriById(int id) {
+        return this.baoTriRepo.getBaoTriById(id);
+    }
+    
 
     @Override
     public Baotri createOrUpdate(Baotri baoTri) {
         return this.baoTriRepo.createOrUpdate(baoTri);
     }
-    
 }

@@ -14,5 +14,6 @@ import java.util.Map;
  */
 public interface BaotriRepository {
     List<Baotri> getBaoTri(Map<String,String> params);
+    Baotri getBaoTriById(int id);
     Baotri createOrUpdate(Baotri baoTri);
 }

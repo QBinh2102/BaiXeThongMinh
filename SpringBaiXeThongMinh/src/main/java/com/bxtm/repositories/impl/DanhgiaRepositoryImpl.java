@@ -60,8 +60,20 @@ public class DanhgiaRepositoryImpl implements DanhgiaRepository {
     public Danhgia getDanhGiaById(int id) {
         Session s = this.factory.getObject().getCurrentSession();
         return s.get(Danhgia.class, id);
-
     }
+    
+//    @Override
+//    public List<Danhgia> getDanhGiaByBaiDo(int id) {
+//        Session s = this.factory.getObject().getCurrentSession();
+//        CriteriaBuilder cb = s.getCriteriaBuilder();
+//        CriteriaQuery<Danhgia> q = cb.createQuery(Danhgia.class);
+//        Root root = q.from(Danhgia.class);
+//        q.select(root);
+//        q.where(cb.equal(root.get("idBaiDo").as(Integer.class), id));
+//        
+//        Query query = s.createQuery(q);
+//        return query.getResultList();
+//    }
 
     @Override
     public Danhgia createOrUpdate(Danhgia danhGia) {

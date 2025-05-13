@@ -6,6 +6,7 @@ package com.bxtm.controllers;
 
 import com.bxtm.pojo.Nguoidung;
 import com.bxtm.services.NguoidungService;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,12 @@ public class NguoidungController {
     @Autowired
     private NguoidungService nguoiDungService;
     
+    @RequestMapping("/admin/")
+    public String getAllNguoiDung(Model model, Map<String,String> params){
+        model.addAttribute("nguoidungs", this.nguoiDungService.getNguoiDung(params));
+        return "quanLyNguoiDung";
+    }
+    
     @GetMapping("/")
     public String createView(Model model) {
         model.addAttribute("nguoidung", new Nguoidung());
@@ -40,7 +47,7 @@ public class NguoidungController {
     
     @GetMapping("/{idNguoiDung}")
     public String updateView(Model model, @PathVariable(value = "idNguoiDung") int id) {
-        model.addAttribute("product", this.nguoiDungService.getNguoiDungById(id));
+        model.addAttribute("nguoidung", this.nguoiDungService.getNguoiDungById(id));
         return "nguoidungs";
     }
 }

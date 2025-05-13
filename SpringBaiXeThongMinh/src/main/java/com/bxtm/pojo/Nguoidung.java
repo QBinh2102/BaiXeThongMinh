@@ -122,13 +122,10 @@ public class Nguoidung implements Serializable {
     private Set<Hoadon> hoadonSet;
     @OneToMany(mappedBy = "idNguoiDung")
     @JsonIgnore
-    private Set<Soden> sodenSet;
-    @OneToMany(mappedBy = "idNguoiDung")
-    @JsonIgnore
     private Set<Danhgia> danhgiaSet;
     @Transient
     private MultipartFile file;
-    
+
     public Nguoidung() {
     }
 
@@ -284,14 +281,6 @@ public class Nguoidung implements Serializable {
 
     public void setHoadonSet(Set<Hoadon> hoadonSet) {
         this.hoadonSet = hoadonSet;
-    }
-
-    public Set<Soden> getSodenSet() {
-        return sodenSet;
-    }
-
-    public void setSodenSet(Set<Soden> sodenSet) {
-        this.sodenSet = sodenSet;
     }
 
     public Set<Danhgia> getDanhgiaSet() {

@@ -1,6 +1,7 @@
 package com.bxtm.repositories.impl;
 
 import com.bxtm.pojo.Baido;
+import com.bxtm.pojo.Chodo;
 import com.bxtm.pojo.Danhgia;
 import com.bxtm.repositories.BaidoRepository;
 import jakarta.persistence.Query;
@@ -84,19 +85,6 @@ public class BaidoRepositoryImpl implements BaidoRepository {
         s.refresh(baiDo);
 
         return baiDo;
-    }
-    
-    @Override
-    public List<Danhgia> getDanhGiaByBaiDo(int id) {
-        Session s = this.factory.getObject().getCurrentSession();
-        CriteriaBuilder cb = s.getCriteriaBuilder();
-        CriteriaQuery<Danhgia> q = cb.createQuery(Danhgia.class);
-        Root root = q.from(Danhgia.class);
-        q.select(root);
-        q.where(cb.equal(root.get("idBaiDo").as(Integer.class), id));
-        
-        Query query = s.createQuery(q);
-        return query.getResultList();
     }
 
 //    public void deleteBaiDo(int id) {

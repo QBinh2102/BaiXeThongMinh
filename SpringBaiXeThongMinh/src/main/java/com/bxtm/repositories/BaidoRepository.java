@@ -17,5 +17,4 @@ public interface BaidoRepository {
     List<Baido> getBaiDo(Map<String,String> params);
     Baido getBaiDoById(int id);
     Baido createOrUpdate(Baido baiDo);
-    List<Danhgia> getDanhGiaByBaiDo(int id);
 }

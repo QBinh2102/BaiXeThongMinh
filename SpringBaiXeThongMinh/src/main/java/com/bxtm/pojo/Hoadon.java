@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,9 +60,11 @@ public class Hoadon implements Serializable {
     private String trangThai;
     @JoinColumn(name = "idBooking", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Booking idBooking;
     @JoinColumn(name = "idNguoiDung", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Nguoidung idNguoiDung;
 
     public Hoadon() {

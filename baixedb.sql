@@ -107,7 +107,7 @@ CREATE TABLE `booking` (
 
 LOCK TABLES `booking` WRITE;
 /*!40000 ALTER TABLE `booking` DISABLE KEYS */;
-INSERT INTO `booking` VALUES (1,1,1,1,10000.00,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,1,2,2,20000.00,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,2,4,1,20000.00,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
+INSERT INTO `booking` VALUES (1,1,1,1,10000.00,'2025-05-09 08:00:00','2025-05-10 07:00:00','2025-05-10 09:00:00','Hoàn thành'),(2,1,2,2,20000.00,'2025-05-09 09:00:00','2025-05-10 08:00:00','2025-05-10 10:00:00','Đang đặt'),(3,1,3,1,20000.00,'2025-05-09 10:00:00','2025-05-10 09:00:00','2025-05-10 11:00:00','Hủy');
 /*!40000 ALTER TABLE `booking` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,33 +244,6 @@ INSERT INTO `nguoidung` VALUES (1,'Nguyễn Văn A','user1','$2a$10$5X9k5N1sTc1/
 UNLOCK TABLES;
 
 --
--- Table structure for table `soden`
---
-
-DROP TABLE IF EXISTS `soden`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `soden` (
-  `id` int NOT NULL AUTO_INCREMENT,
-  `idNguoiDung` int DEFAULT NULL,
-  `soLanViPham` int DEFAULT '0',
-  PRIMARY KEY (`id`),
-  KEY `idNguoiDung` (`idNguoiDung`),
-  CONSTRAINT `soden_ibfk_1` FOREIGN KEY (`idNguoiDung`) REFERENCES `nguoidung` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `soden`
---
-
-LOCK TABLES `soden` WRITE;
-/*!40000 ALTER TABLE `soden` DISABLE KEYS */;
-INSERT INTO `soden` VALUES (1,1,1),(2,2,0);
-/*!40000 ALTER TABLE `soden` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
 -- Table structure for table `thongbao`
 --
 
@@ -307,4 +280,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-05-12 21:40:50
+-- Dump completed on 2025-05-13 20:28:00

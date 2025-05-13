@@ -14,5 +14,6 @@ import java.util.Map;
  */
 public interface ThongbaoRepository {
     List<Thongbao> getThongBao(Map<String,String> params);
+    Thongbao getThongBaoById(int id);
     Thongbao createOrUpdate(Thongbao thongBao);
 }

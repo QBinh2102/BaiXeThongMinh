@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -52,6 +53,7 @@ public class Thongbao implements Serializable {
     private Date thoiGianThongBao;
     @JoinColumn(name = "idNguoiDung", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Nguoidung idNguoiDung;
 
     public Thongbao() {

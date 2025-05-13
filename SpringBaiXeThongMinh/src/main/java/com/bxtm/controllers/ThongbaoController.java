@@ -4,9 +4,8 @@
  */
 package com.bxtm.controllers;
 
-import com.bxtm.pojo.Baotri;
-import com.bxtm.services.BaotriService;
-import java.util.Map;
+import com.bxtm.pojo.Thongbao;
+import com.bxtm.services.ThongbaoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,29 +16,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
  *
- * @author huynh
+ * @author toquocbinh2102
  */
 @Controller
-@RequestMapping("/baotris")
-public class BaotriController {
+@RequestMapping("/thongbaos")
+public class ThongbaoController {
     @Autowired
-    private BaotriService baoTriService;
+    private ThongbaoService thongBaoService;
     
     @RequestMapping("/admin/")
-    public String baoTri(Model model, Map<String,String> params){
-        model.addAttribute("baotris",this.baoTriService.getBaoTri(params));
-        return "baotris";
+    public String getThongBaos(Model model){
+        model.addAttribute("thongbaos", this.thongBaoService.getThongBao(null));
+        return "thongbaos";
     }
     
     @GetMapping("/admin/")
     public String createView(Model model){
-        model.addAttribute("baotri", new Baotri());
-        return "baotris";
+        model.addAttribute("newThongBao", new Thongbao());
+        return "thongbaos";
     }
     
     @PostMapping("/admin/add")
-    public String add(@ModelAttribute(value="baotri") Baotri baoTri){
-        this.baoTriService.createOrUpdate(baoTri);
-        return "redirect:/baotris/admin/";
+    public String add(@ModelAttribute(value="newThongBao") Thongbao thongbao){
+        this.thongBaoService.createOrUpdate(thongbao);
+        return "redirect:/thongbaos/admin/";
     }
 }

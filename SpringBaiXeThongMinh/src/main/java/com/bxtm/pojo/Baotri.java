@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -59,6 +60,7 @@ public class Baotri implements Serializable {
     private String tinhTrang;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Baido idBaiDo;
 
     public Baotri() {

@@ -14,5 +14,6 @@ import java.util.Map;
  */
 public interface BookingService {
     List<Booking> getBookings(Map<String, String> params);
+    Booking getBookingById(int id);
     Booking createOrUpdate(Booking booking);
 }

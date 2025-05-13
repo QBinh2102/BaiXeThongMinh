@@ -54,6 +54,12 @@ public class ThongbaoRepositoryImpl implements ThongbaoRepository {
 
         return query.getResultList();
     }
+    
+    @Override
+    public Thongbao getThongBaoById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Thongbao.class,id);
+    }
 
     @Override
     public Thongbao createOrUpdate(Thongbao thongBao) {

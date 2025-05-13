@@ -27,8 +27,12 @@ public class BookingServiceImpl implements BookingService{
     }
 
     @Override
+    public Booking getBookingById(int id) {
+        return this.bookingRepo.getBookingById(id);
+    }
+    
+    @Override
     public Booking createOrUpdate(Booking booking) {
         return this.bookingRepo.createOrUpdate(booking);
     }
-    
 }

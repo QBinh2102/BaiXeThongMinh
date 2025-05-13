@@ -15,6 +15,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -51,7 +52,27 @@ public class ApiNguoidungController {
         newNguoiDung.setActive(Boolean.TRUE);
         
         return new ResponseEntity<>(this.nguoiDungService.createOrUpdate(newNguoiDung), HttpStatus.CREATED);
-    } 
+    }
+    
+    @PutMapping("/admin/nguoidungs/{idNguoiDung}")
+    public ResponseEntity<Nguoidung> updateNguoiDung(@RequestParam Map<String,String> params,
+            @RequestParam("avatar") MultipartFile avatar){
+        Nguoidung nguoiDung = new Nguoidung();
+        nguoiDung.setHoTen(params.get("hoTen"));
+        nguoiDung.setTaiKhoan(params.get("taiKhoan"));
+        nguoiDung.setMatKhau(params.get("matKhau"));
+        nguoiDung.setEmail(params.get("email"));
+        nguoiDung.setSdt(params.get("sdt"));
+        nguoiDung.setCccd(params.get("cccd"));
+        nguoiDung.setHieuXe(params.get("hieuXe"));
+        nguoiDung.setBienSo(params.get("bienSo"));
+        nguoiDung.setMauXe(params.get("mauXe"));
+        nguoiDung.setFile(avatar);
+        nguoiDung.setVaiTro("ROLE_USER");
+        nguoiDung.setActive(Boolean.TRUE);
+        
+        return new ResponseEntity<>(this.nguoiDungService.createOrUpdate(nguoiDung), HttpStatus.OK);
+    }
     
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody Nguoidung nguoiDung) {

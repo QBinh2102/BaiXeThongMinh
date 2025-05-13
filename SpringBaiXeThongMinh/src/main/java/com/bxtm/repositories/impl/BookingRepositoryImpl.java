@@ -92,6 +92,12 @@ public class BookingRepositoryImpl implements BookingRepository {
 
         return query.getResultList();
     }
+    
+    @Override
+    public Booking getBookingById(int id){
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Booking.class, id);
+    }
 
     @Override
     public Booking createOrUpdate(Booking booking) {

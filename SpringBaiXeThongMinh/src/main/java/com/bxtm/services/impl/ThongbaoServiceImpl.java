@@ -25,10 +25,14 @@ public class ThongbaoServiceImpl implements ThongbaoService{
     public List<Thongbao> getThongBao(Map<String, String> params) {
         return this.thongBaoRepo.getThongBao(params);
     }
+    
+    @Override
+    public Thongbao getThongBaoById(int id) {
+        return this.thongBaoRepo.getThongBaoById(id);
+    }
 
     @Override
     public Thongbao createOrUpdate(Thongbao thongBao) {
         return this.thongBaoRepo.createOrUpdate(thongBao);
     }
-    
 }

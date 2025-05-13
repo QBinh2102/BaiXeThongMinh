@@ -18,5 +18,4 @@ public interface ChodoRepository {
     Chodo getChoDoById(int id);
     Chodo createOrUpdate(Chodo choDo);
     void deleteChoDo(int id);
-//    List<Chodo> getChoDoTrong(int idBaiDo, LocalDateTime start, LocalDateTime end);
 }

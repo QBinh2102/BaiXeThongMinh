@@ -51,7 +51,12 @@ public class BaotriRepositoryImpl implements BaotriRepository {
         }
         Query query = s.createQuery(q);
         return query.getResultList();
-
+    }
+    
+    @Override
+    public Baotri getBaoTriById(int id) {
+        Session s = this.factory.getObject().getCurrentSession();
+        return s.get(Baotri.class, id);
     }
 
     @Override

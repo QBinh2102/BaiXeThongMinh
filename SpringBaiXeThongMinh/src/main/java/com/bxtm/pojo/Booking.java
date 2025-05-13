@@ -4,6 +4,7 @@
  */
 package com.bxtm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -74,14 +75,18 @@ public class Booking implements Serializable {
     private String trangThai;
     @JoinColumn(name = "idBaiDo", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Baido idBaiDo;
     @JoinColumn(name = "idChoDo", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Chodo idChoDo;
     @JoinColumn(name = "idNguoiDung", referencedColumnName = "id")
     @ManyToOne
+    @JsonIgnore
     private Nguoidung idNguoiDung;
     @OneToMany(mappedBy = "idBooking")
+    @JsonIgnore
     private Set<Hoadon> hoadonSet;
 
     public Booking() {
